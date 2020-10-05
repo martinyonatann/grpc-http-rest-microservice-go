@@ -2,12 +2,12 @@ package grpc
 
 import (
 	"context"
-	"log"
 	"net"
 	"os"
 	"os/signal"
 
 	v1 "github.com/martinyonathann/grpc-http-rest-microservice-go/pkg/api/v1"
+	"github.com/martinyonathann/grpc-http-rest-microservice-go/pkg/logger"
 	"google.golang.org/grpc"
 )
 
@@ -28,7 +28,7 @@ func RunServer(ctx context.Context, v1API v1.ToDoServiceServer, port string) err
 	go func() {
 		for range c {
 			//sig is a ^C, handle it
-			log.Println("shutting down gRPC server...")
+			logger.Log.Warn("shutting down gRPC server...")
 
 			server.GracefulStop()
 
@@ -37,7 +37,7 @@ func RunServer(ctx context.Context, v1API v1.ToDoServiceServer, port string) err
 	}()
 
 	// start gRPC server
-	log.Println("Starting gRPC server...")
+	logger.Log.Warn("Starting gRPC server...")
 	return server.Serve(listen)
 
 }
