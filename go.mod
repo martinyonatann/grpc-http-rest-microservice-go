@@ -5,6 +5,7 @@ go 1.14
 require (
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.4.2
+	github.com/grpc-ecosystem/go-grpc-middleware v1.2.2 // indirect
 	github.com/grpc-ecosystem/grpc-gateway v1.15.0
 	go.uber.org/zap v1.16.0 // indirect
 	golang.org/x/net v0.0.0-20200927032502-5d4f70055728 // indirect
