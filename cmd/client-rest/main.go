@@ -54,7 +54,7 @@ func main() {
 	}
 
 	//Call Read
-	resp, err = http.Get(fmt.Sprintf("%s%s%s", *address, "/v1/todo", created.ID))
+	resp, err = http.Get(fmt.Sprintf("%s%s/%s", *address, "/v1/todo", created.ID))
 	if err != nil {
 		log.Fatalf("failed too call Read method: %v", err)
 	}
@@ -65,7 +65,7 @@ func main() {
 	} else {
 		body = string(bodyBytes)
 	}
-	log.Printf("Read response: Code=%d, Body %s\n\n", resp.StatusCode, body)
+	log.Printf("Read response: Code=%d, Body=%s\n\n", resp.StatusCode, body)
 
 	//Call Update
 	req, err := http.NewRequest("PUT", fmt.Sprintf("%s%s/%s", *address, "/v1/todo", created.ID),
@@ -100,24 +100,24 @@ func main() {
 	}
 	bodyBytes, err = ioutil.ReadAll(resp.Body)
 	resp.Body.Close()
-	if err != nil{
-		body = fmt.Sprintf("failed read ReadAll response body: %v",err)
-	}else {
+	if err != nil {
+		body = fmt.Sprintf("failed read ReadAll response body: %v", err)
+	} else {
 		body = string(bodyBytes)
 	}
-	log.Printf("ReadAll response: Code=%d, Body=%s\n\n",resp.StatusCode,body)
+	log.Printf("ReadAll response: Code=%d, Body=%s\n\n", resp.StatusCode, body)
 
 	//Call Delete
-	req, err = http.NewRequest("DELETE", fmt.Sprintf("%s%s/%s", *address,"/v1/todo",created.ID), nil)
+	req, err = http.NewRequest("DELETE", fmt.Sprintf("%s%s/%s", *address, "/v1/todo", created.ID), nil)
 	resp, err = http.DefaultClient.Do(req)
-	if err != nil{
+	if err != nil {
 		log.Fatalf("failed to call Delete method: %v", err)
 	}
 	bodyBytes, err = ioutil.ReadAll(resp.Body)
 	resp.Body.Close()
-	if err != nil{
-		body=fmt.Sprintf("failed to read Delete response body: %v", err)
-	}else {
+	if err != nil {
+		body = fmt.Sprintf("failed to read Delete response body: %v", err)
+	} else {
 		body = string(bodyBytes)
 	}
 	log.Printf("Delete response: Code=%d, Body%s\n\n", resp.StatusCode, body)
