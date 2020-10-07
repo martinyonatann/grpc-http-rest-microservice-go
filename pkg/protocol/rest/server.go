@@ -10,6 +10,7 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	v1 "github.com/martinyonathann/grpc-http-rest-microservice-go/pkg/api/v1"
 	"github.com/martinyonathann/grpc-http-rest-microservice-go/pkg/logger"
+	"github.com/martinyonathann/grpc-http-rest-microservice-go/pkg/protocol/rest/middleware"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 )
@@ -25,8 +26,9 @@ func RunServer(ctx context.Context, grpcPort, httpPort string) error {
 		logger.Log.Fatal("failed to start HTTP gateway: %v", zap.String("reason", err.Error()))
 	}
 	srv := &http.Server{
-		Addr:    ":" + httpPort,
-		Handler: mux,
+		Addr: ":" + httpPort,
+		Handler: middleware.AddRequestID(
+			middleware.AddLogger(logger.Log, mux)),
 	}
 	//graceful shutdown
 	c := make(chan os.Signal, 1)
