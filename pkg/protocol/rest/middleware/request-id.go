@@ -48,6 +48,7 @@ func init() {
 //where "random" is a base 62 random tring that uniquely indentifies this go
 //process, and where the last number is an atomically incremented request counter.
 
+//AddRequestID for handler
 func AddRequestID(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		myid := atomic.AddUint64(&reqID, 1)
@@ -57,6 +58,7 @@ func AddRequestID(h http.Handler) http.Handler {
 	})
 }
 
+//GetReqID for get RequestID
 func GetReqID(ctx context.Context) string {
 	if ctx == nil {
 		return ""
